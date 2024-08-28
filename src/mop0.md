@@ -7,14 +7,15 @@ The default route, represented by the parent of the node,
 is used to transmit data packets in an upward direction.
 
 ```admonish note
-In this mode of operation, **only** DIS and DIO messages are sent.
+In this mode of operation, **only** [DIS](./rpl-msg-formats.md#dodag-information-solicitation-dis)
+and [DIO](./rpl-msg-formats.md#dodag-information-object-dio) messages are sent.
 ```
 
 ## RPL network formation ##
 
 The following network contains 5 nodes.
 The root node (R) and 4 normal nodes.
-They are all using the same RPL Instance ID, Mode of Operation and Objective Function.
+They are all using the same RPL Instance ID, Mode of Operation and [Objective Function](./rpl-objective-function.md).
 
 ![Empty RPL network](assets/rpl/empty-network.webp)
 <small>Figure 1: an empty network with 4 normal nodes and 1 root node.</small>

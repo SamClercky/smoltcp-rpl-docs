@@ -1,4 +1,4 @@
-# Using smoltcp
+# Setting up smoltcp
 
 ## 1. Adding `smoltcp` to your `Cargo.toml`
 

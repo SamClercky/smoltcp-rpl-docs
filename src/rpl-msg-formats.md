@@ -110,7 +110,7 @@ More information is usually contained in a [DODAG Configuration](#dodag-configur
 +-+-+-+-+-+-+-+-+
 ```
 
-- **RplInstanceId**: the RPL instance ID.
+- **RPLInstanceId**: the RPL instance ID.
 - **Version Number** the version of the RPL isntance, specifies an iteration ([Section 8.2]()).
 - **Rank**: shows a relative distance from the advertising node to the root ([Section 8.2]()).
 - **G (Grounded)**: indicates if the scope of the application is met or not (application specific and in our case always 0).
@@ -241,7 +241,7 @@ It is sent to propagate routing information.
 +-+-+-+-+-+-+-+-+
 ```
 
-- **RplInstanceId**: the RPL instance ID.
+- **RPLInstanceId**: the RPL instance ID.
 - **K**: if set, an acknowledgement is requested.
 - **D**: if set, the DODAGID is present in the message.
 - **Flags**: unused field, must be set to zero.
@@ -357,7 +357,7 @@ They are unicast messages.
 +-+-+-+-+-+-+-+-+
 ```
 
-- **RplInstanceId**: the RPL instance ID.
+- **RPLInstanceId**: the RPL instance ID.
 - **D**: if set, the DODAGID is present in the message.
 - **Reserved**: unused field, must be set to zero.
 - **DAOSequence**: correlates to the DAO message.
