@@ -98,6 +98,29 @@ However, if inconsistencies are detected in the network,
 \\(I\\) is reset to a value between \\(I_{min}\\) and \\(2 \cdot I_{min}\\).
 This ensures efficient use of resources while still being able to ensure the maintainance of the network.
 
+## Usage with smoltcp ##
+
+The RPL network can be formed using the `smoltcp` library.
+The following feature flags need to be enabled: `rpl-mop-0` and `proto-sixlowpan`.
+Additionally, the `proto-sixlowpan-fragmentation` feature can be enabled to allow for fragmentation of 6LoWPAN packets.
+
+The following configuration should be added to the configuration struct for the interface:
+```rust
+config.rpl = RplConfig::new(RplModeOfOperation::NoDownwardRoutesMaintained);
+```
+
+When using RPL as a root node, the following configuration should be added:
+```rust
+config.rpl = RplConfig::new(RplModeOfOperation::NoDownwardRoutesMaintained)
+    .add_root_config(RplRootConfig::new(
+        RplInstanceId::from(30), // Change this to the desired RPL Instance ID
+        Ipv6Address::default(),  // Change this to the desired DODAG ID
+    ));
+
+```
+
+The interface should now behave like a RPL node in MOP0.
+
 # Summary #
 
 - Network is formed by sending *DIO* messages

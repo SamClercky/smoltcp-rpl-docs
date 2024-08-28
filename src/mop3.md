@@ -46,6 +46,38 @@ However, it does not forward the packet to node 1, since it is the originator of
 The RPL standard does not specify how to unsubscribe from a multicast group.
 ```
 
+## Usage with smoltcp ##
+
+The RPL network can be formed using the `smoltcp` library.
+The following feature flags need to be enabled: `rpl-mop-2` and `proto-sixlowpan`.
+Additionally, the `proto-sixlowpan-fragmentation` feature can be enabled to allow for fragmentation of 6LoWPAN packets.
+
+The following configuration should be added to the configuration struct for the interface:
+```rust
+config.rpl = RplConfig::new(RplModeOfOperation::StoringMode);
+```
+
+When using RPL as a root node, the following configuration should be added:
+```rust
+config.rpl = RplConfig::new(RplModeOfOperation::StoringMode)
+    .add_root_config(RplRootConfig::new(
+        RplInstanceId::from(30), // Change this to the desired RPL Instance ID
+        Ipv6Address::default(),  // Change this to the desired DODAG ID
+    ));
+```
+
+The interface should join a multicast group:
+```rust
+interface.join_multicast_group(
+    device,
+    // Change this to the desired multicast group address
+    Ipv6Address::new_multicast("FF12::ABCD"),
+    Instant::now()
+);
+```
+
+The interface should now behave like a RPL node in MOP3.
+
 ## Summary
 
 - An extra _DAO_ message is sent to join a multicast group.

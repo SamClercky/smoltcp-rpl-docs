@@ -28,6 +28,28 @@ Node 2 transmits a packet to node 3 (imagine that node 3 is not in range of node
 ![Traveling packet](assets/rpl/formed-mop2.webp)
 ```
 
+## Usage with smoltcp ##
+
+The RPL network can be formed using the `smoltcp` library.
+The following feature flags need to be enabled: `rpl-mop-2` and `proto-sixlowpan`.
+Additionally, the `proto-sixlowpan-fragmentation` feature can be enabled to allow for fragmentation of 6LoWPAN packets.
+
+The following configuration should be added to the configuration struct for the interface:
+```rust
+config.rpl = RplConfig::new(RplModeOfOperation::StoringMode);
+```
+
+When using RPL as a root node, the following configuration should be added:
+```rust
+config.rpl = RplConfig::new(RplModeOfOperation::StoringMode)
+    .add_root_config(RplRootConfig::new(
+        RplInstanceId::from(30), // Change this to the desired RPL Instance ID
+        Ipv6Address::default(),  // Change this to the desired DODAG ID
+    ));
+```
+
+The interface should now behave like a RPL node in MOP2.
+
 # Summary #
 
 - Every node in the network has an overview of the network topology.

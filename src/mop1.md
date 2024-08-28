@@ -51,6 +51,29 @@ The root increments the DTSN in its *DIO* messages.
 When a node receives a *DIO* message with a higher DTSN, it will send a *DAO* message to the root.
 In smoltcp, nodes periodically send *DAO* messages to the root, without waiting for a *DIO* message with a higher DTSN.
 
+## Usage with smoltcp ##
+
+The RPL network can be formed using the `smoltcp` library.
+The following feature flags need to be enabled: `rpl-mop-1` and `proto-sixlowpan`.
+Additionally, the `proto-sixlowpan-fragmentation` feature can be enabled to allow for fragmentation of 6LoWPAN packets.
+
+The following configuration should be added to the configuration struct for the interface:
+```rust
+config.rpl = RplConfig::new(RplModeOfOperation::NonStoringMode);
+```
+
+When using RPL as a root node, the following configuration should be added:
+```rust
+config.rpl = RplConfig::new(RplModeOfOperation::NonStoringMode)
+    .add_root_config(RplRootConfig::new(
+        RplInstanceId::from(30), // Change this to the desired RPL Instance ID
+        Ipv6Address::default(),  // Change this to the desired DODAG ID
+    ));
+
+```
+
+The interface should now behave like a RPL node in MOP1.
+
 # Summary #
 
 - Network is formed by sending *DIO* messages
