@@ -67,6 +67,17 @@ config.rpl = RplConfig::new(RplModeOfOperation::StoringModeWithMulticast)
     ));
 ```
 
+To allow `smoltcp` to do the duplication, a non-empty buffer needs to be allocated specifically for multicast:
+```rust
+let mut interface = Interface::<'static>::new(
+    config,
+    &mut device,
+    vec![PacketMetadata::EMPTY; 16], // the multicast buffer
+    vec![0; 2048],
+    Instant::now(),
+);
+```
+
 The interface should join a multicast group:
 ```rust
 interface.join_multicast_group(
